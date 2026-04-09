@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% block slides %}
-  {% for slide in slides %}
-  <div class="slide{% if loop.first %} active{% endif %}" id="{{ slide.id }}">
-    <div class="slide-header">
-      <span class="tag">{{ slide.tag }}{% if slide.title %} - {{ slide.title }}{% endif %}</span>
-      {% if show_logo %}
-      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
-      {% endif %}
-    </div>
-    <div class="slide-body markdown-slide">{{ slide.html | safe }}</div>
-  </div>
-  {% endfor %}
+  {% include "slides/01_title.html" %}
+  {% include "slides/02_definition.html" %}
+  {% include "slides/03_parsers.html" %}
+  {% include "slides/04_web_polyglot.html" %}
+  {% include "slides/05_binary.html" %}
+  {% include "slides/06_c_python.html" %}
+  {% include "slides/07_demo.html" %}
+  {% include "slides/08_bash_python.html" %}
+  {% include "slides/09_polycompiler.html" %}
+  {% include "slides/10_why_matters.html" %}
+  {% include "slides/11_exercises.html" %}
+  {% include "slides/12_questions.html" %}
 {% endblock %}
