@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 
@@ -20,6 +20,11 @@ def index():
         demo_c=read_example('demo.c'),
         bash_python=read_example('bash_python.sh'),
     )
+
+
+@app.route('/logo')
+def logo():
+    return send_from_directory(BASE_DIR, 'HacKSU.png')
 
 
 if __name__ == '__main__':

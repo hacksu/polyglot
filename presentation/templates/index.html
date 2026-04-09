@@ -10,11 +10,11 @@
   <style>
     :root {
       --green:      #35C982;  /* HacKSU green  */
-      --dim-green:  #1e7a4d;  /* dimmed green  */
+      --dim-green:  #4dcb90;  /* dimmed green  */
       --amber:      #4683FF;  /* HacKSU blue   */
       --red:        #ff4444;
-      --bg:         #0a0a0a;
-      --bg2:        #0d1117;
+      --bg:         #142027;
+      --bg2:        #0d1a22;
       --border:     #1a2a3f;  /* blue-tinted border */
     }
 
@@ -57,6 +57,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
+      background: rgba(20, 32, 39, 0.55);
     }
     .slide.active { opacity: 1; pointer-events: all; }
 
@@ -100,15 +101,15 @@
     }
     h3 { font-size: 0.95em; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
 
-    p, li { font-size: 0.95em; line-height: 1.7; color: #ccc; }
+    p, li { font-size: 0.95em; line-height: 1.7; color: #e8e8e8; }
     ul { list-style: none; padding-left: 0; }
     ul li::before { content: '> '; color: var(--green); }
 
-    .subtitle  { font-size: 1.1em; color: var(--dim-green); letter-spacing: 2px; }
+    .subtitle  { font-size: 1.1em; color: #a0e8c8; letter-spacing: 2px; }
     .hl-green  { color: var(--green);  font-weight: bold; }
     .hl-amber  { color: var(--amber); }
     .hl-red    { color: var(--red); }
-    .hl-dim    { color: #555; }
+    .hl-dim    { color: #8899aa; }
 
     /* ── Layout helpers ─────────────────────────────────────── */
     .two-col   { display: grid; grid-template-columns: 1fr 1fr;     gap: 18px; }
@@ -117,7 +118,8 @@
     .box {
       border: 1px solid var(--border);
       padding: 14px 16px;
-      background: var(--bg2);
+      background: rgba(13, 26, 34, 0.85);
+      backdrop-filter: blur(2px);
     }
     .box h3 {
       margin-bottom: 10px;
@@ -125,7 +127,7 @@
       border-bottom: 1px solid var(--border);
     }
     .box ul li { font-size: 0.85em; }
-    .box p     { font-size: 0.85em; color: #aaa; }
+    .box p     { font-size: 0.85em; color: #cdd; }
 
     .pill {
       display: inline-block;
@@ -259,6 +261,8 @@
 </head>
 <body>
 
+<canvas id="bg-canvas" style="position:fixed;inset:0;z-index:-1;pointer-events:none;display:block;"></canvas>
+
 <div id="deck">
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -267,7 +271,7 @@
   <div class="slide active" id="slide-1">
     <div class="slide-header">
       <span class="tag">Polyglot Programming</span>
-      <span>CS Lecture — 2025</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body" style="justify-content:center;">
       <div>
@@ -292,7 +296,7 @@
   <div class="slide" id="slide-2">
     <div class="slide-header">
       <span class="tag">01 — Definition</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>What is a Polyglot File?</h2>
@@ -332,7 +336,7 @@
   <div class="slide" id="slide-3">
     <div class="slide-header">
       <span class="tag">02 — Parser Mechanics</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>How Do Parsers See the World?</h2>
@@ -383,7 +387,7 @@
   <div class="slide" id="slide-4">
     <div class="slide-header">
       <span class="tag">03 — HTML + CSS + JavaScript</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>The Web Is Already Polyglot</h2>
@@ -437,7 +441,7 @@
   <div class="slide" id="slide-5">
     <div class="slide-header">
       <span class="tag">04 — Binary Polyglots</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>Binary Polyglots — Images</h2>
@@ -498,7 +502,7 @@
   <div class="slide" id="slide-6">
     <div class="slide-header">
       <span class="tag">05 — The C + Python Trick</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>The C + Python Mechanism</h2>
@@ -553,7 +557,7 @@
   <div class="slide" id="slide-7">
     <div class="slide-header">
       <span class="tag">06 — Live Demo: demo.c</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>Demo: <code style="font-size:0.75em; text-transform:none;">examples/demo.c</code></h2>
@@ -596,7 +600,7 @@
   <div class="slide" id="slide-8">
     <div class="slide-header">
       <span class="tag">07 — Bash + Python</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>Bash + Python: The Exec Trick</h2>
@@ -641,7 +645,7 @@
   <div class="slide" id="slide-9">
     <div class="slide-header">
       <span class="tag">08 — polycompiler</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>polycompiler — Python + JavaScript</h2>
@@ -704,7 +708,7 @@ node   both.py</code></pre>
   <div class="slide" id="slide-10">
     <div class="slide-header">
       <span class="tag">09 — Why It Matters</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>Why Does This Matter?</h2>
@@ -758,7 +762,7 @@ node   both.py</code></pre>
   <div class="slide" id="slide-11">
     <div class="slide-header">
       <span class="tag">10 — Try It Yourself</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body">
       <h2>Try It Yourself</h2>
@@ -814,7 +818,7 @@ python3 examples/bash_python.sh</code></pre>
   <div class="slide" id="slide-12">
     <div class="slide-header">
       <span class="tag">EOF</span>
-      <span>Polyglot Programming</span>
+      <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
     </div>
     <div class="slide-body" style="justify-content:center; align-items:center; text-align:center;">
       <h1>QUESTIONS?<span class="cursor"></span></h1>
@@ -885,6 +889,74 @@ python3 examples/bash_python.sh</code></pre>
       e.preventDefault(); goTo(total - 1);
     }
   });
+
+  // ── HacKSU particle network background ─────────────────────
+  (function () {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    const NODE_COUNT   = 90;
+    const MAX_DIST     = 180;
+    const NODE_COLOR   = '#35c982';
+    const LINE_COLOR   = '53, 201, 130';  // rgb for rgba()
+    const NODE_RADIUS  = 2;
+    const SPEED        = 0.35;
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const nodes = Array.from({ length: NODE_COUNT }, () => ({
+      x:  Math.random() * canvas.width,
+      y:  Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * SPEED,
+      vy: (Math.random() - 0.5) * SPEED,
+      r:  Math.random() * 1.5 + 1,
+    }));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // connections
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx   = nodes[i].x - nodes[j].x;
+          const dy   = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.35;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${alpha})`;
+            ctx.lineWidth   = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // nodes
+      nodes.forEach(n => {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = NODE_COLOR;
+        ctx.fill();
+
+        // update
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  })();
 </script>
 
 </body>
