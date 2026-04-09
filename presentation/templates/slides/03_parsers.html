@@ -1,0 +1,47 @@
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <span class="tag">02 — Parser Mechanics</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>How Do Parsers See the World?</h2>
+    <p style="color:#bbb;">Every language has regions it <span class="hl-amber">ignores</span>. Polyglots hide language B inside language A's ignored regions — and vice versa.</p>
+    <div class="three-col">
+      <div class="box">
+        <h3>Comments</h3>
+        <ul style="margin-top:8px;">
+          <li><span class="hl-green">#</span> &nbsp;Python, Bash, Ruby, Perl</li>
+          <li><span class="hl-green">//</span> &nbsp;C, C++, Java, JavaScript</li>
+          <li><span class="hl-green">/* */</span> C, CSS, Java</li>
+          <li><span class="hl-green">&lt;!-- --&gt;</span> HTML, XML</li>
+          <li><span class="hl-green">--</span> &nbsp;SQL, Lua, Haskell</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Skip Regions</h3>
+        <ul style="margin-top:8px;">
+          <li><span class="hl-amber">#if 0 … #endif</span> in C</li>
+          <li><span class="hl-amber">"""..."""</span> string literals (Python)</li>
+          <li><span class="hl-amber">/* ... */</span> block comments</li>
+          <li><span class="hl-amber">heredocs</span> in Bash / Ruby</li>
+          <li>Shebang lines &nbsp;<span class="hl-amber">#!/usr/bin/env</span></li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>File Format Rules</h3>
+        <ul style="margin-top:8px;">
+          <li>JPEG reads from the <span class="hl-amber">start</span></li>
+          <li>ZIP  reads from the <span class="hl-amber">end</span></li>
+          <li>PDF has flexible internal structure</li>
+          <li>Magic bytes checked in first N bytes</li>
+          <li>Trailing data is often ignored</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-bar" style="margin-top:4px;">
+      <span class="hl-green">The rule:</span>
+      If parser A ignores region R, and region R is valid in parser B,
+      you can hide language-B code inside R — and vice versa.
+    </div>
+  </div>
+</div>

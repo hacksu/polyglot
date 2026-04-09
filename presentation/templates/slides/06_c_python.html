@@ -1,0 +1,51 @@
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <span class="tag">05 — The C + Python Trick</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>The C + Python Mechanism</h2>
+    <p style="color:#bbb; margin-bottom:10px;">
+      We exploit two features: C's <span class="hl-amber">#if 0 … #endif</span> preprocessor directive
+      and Python's <span class="hl-amber">"""…"""</span> triple-quoted strings.
+    </p>
+    <div class="parser-view">
+      <div class="pv-c">
+        <div class="pv-header">C PREPROCESSOR</div>
+        <div class="pv-body">
+          <div class="line exec">#if 0  &nbsp;&nbsp;&nbsp;← skip until matching #endif</div>
+          <div class="line skip">x = """</div>
+          <div class="line exec">#endif &nbsp;&nbsp;← resume normal compilation</div>
+          <div class="line active">#include &lt;stdio.h&gt;</div>
+          <div class="line active">int main(void) {</div>
+          <div class="line active">&nbsp;&nbsp;printf("Hello from C!\n");</div>
+          <div class="line active">}</div>
+          <div class="line exec">#if 0  &nbsp;&nbsp;&nbsp;← skip again</div>
+          <div class="line skip">"""</div>
+          <div class="line skip">print("Hello from Python!")</div>
+          <div class="line exec">#endif</div>
+        </div>
+      </div>
+      <div class="pv-py">
+        <div class="pv-header">PYTHON INTERPRETER</div>
+        <div class="pv-body">
+          <div class="line comment">#if 0  &nbsp;&nbsp;&nbsp;← Python comment, ignored</div>
+          <div class="line str">x = """ &nbsp;← triple-quoted string begins</div>
+          <div class="line skip">&nbsp;&nbsp;#endif</div>
+          <div class="line skip">&nbsp;&nbsp;#include &lt;stdio.h&gt;</div>
+          <div class="line skip">&nbsp;&nbsp;int main(void) {</div>
+          <div class="line skip">&nbsp;&nbsp;&nbsp;&nbsp;printf("Hello from C!\n");</div>
+          <div class="line skip">&nbsp;&nbsp;}</div>
+          <div class="line skip">&nbsp;&nbsp;#if 0</div>
+          <div class="line str">"""  &nbsp;&nbsp;&nbsp;&nbsp;← string ends, x assigned</div>
+          <div class="line active">print("Hello from Python!")</div>
+          <div class="line comment">#endif &nbsp;&nbsp;← Python comment, ignored</div>
+        </div>
+      </div>
+    </div>
+    <div class="info-bar" style="margin-top:8px; font-size:0.82em;">
+      C never sees the <code>print()</code> call. &nbsp;Python never executes the <code>printf()</code>.
+      Both are 100% correct in their own language.
+    </div>
+  </div>
+</div>

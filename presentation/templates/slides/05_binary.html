@@ -1,0 +1,57 @@
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <span class="tag">04 — Binary Polyglots</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>Binary Polyglots — Images</h2>
+    <p style="color:#bbb; margin-bottom:8px;">File format parsers have their own ignored regions. A single file can be a valid JPEG <em>and</em> a valid ZIP archive simultaneously.</p>
+    <div class="two-col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="ascii">┌──────────────────────────────────────┐
+│        polyglot.jpg  (on disk)       │
+├──────────────────────────────────────┤
+│  FF D8 FF E0 ...  ← JPEG magic bytes │
+│  [JPEG image data ................]  │
+│  [JPEG image data ................]  │
+│  FF D9            ← JPEG end marker  │
+├──────────────────────────────────────┤
+│  PK\x03\x04 ...   ← ZIP local header │
+│  [ZIP file entries ................] │
+│  PK\x05\x06 ...   ← end-of-central- │
+│                       directory      │
+└──────────────────────────────────────┘</div>
+        <div style="font-size:0.85em; color:#bbb; line-height:1.8;">
+          <span class="hl-green">Image viewer:</span> reads from the start → sees valid JPEG ✓<br>
+          <span class="hl-amber">ZIP tool:</span>&nbsp;&nbsp;&nbsp;&nbsp;reads from the end &nbsp;→ sees valid ZIP  ✓<br>
+          <span class="hl-dim">Neither parser notices the other's data.</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px; justify-content:center;">
+        <div class="box">
+          <h3>Why it works</h3>
+          <ul style="margin-top:8px;">
+            <li>JPEG spec: parse forward from magic bytes</li>
+            <li>ZIP spec: find end-of-central-dir from <span class="hl-amber">the back</span></li>
+            <li>JPEG ignores all data after <code>FF D9</code></li>
+            <li>ZIP ignores bytes before its local headers</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Real-world examples</h3>
+          <ul style="margin-top:8px;">
+            <li><span class="hl-amber">CTF forensics</span> — classic puzzle type</li>
+            <li><span class="hl-amber">GIFAR</span> — GIF+JAR (Java applet in image)</li>
+            <li><span class="hl-amber">PDF+ZIP</span> — common in competitions</li>
+            <li><span class="hl-red">Malware</span> — evade file-type content filters</li>
+          </ul>
+        </div>
+        <div class="info-bar" style="font-size:0.8em;">
+          <span class="hl-green">Try it:</span>
+          <code>cat image.jpg archive.zip &gt; polyglot.jpg</code><br>
+          Open in an image viewer, then run <code>unzip polyglot.jpg</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

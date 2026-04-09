@@ -1,0 +1,41 @@
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <span class="tag">07 — Bash + Python</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>Bash + Python: The Exec Trick</h2>
+    <p style="color:#bbb; margin-bottom:10px;">
+      Uses the difference between <span class="hl-amber">quoted words in bash</span>
+      and <span class="hl-amber">adjacent string literals in Python</span>.
+    </p>
+    <div class="two-col">
+      <pre><code class="language-bash">{{ bash_python }}</code></pre>
+      <div style="display:flex; flex-direction:column; gap:14px; justify-content:center;">
+        <div class="box">
+          <h3 style="color:#f96;">Bash sees line 6:</h3>
+          <p style="margin-top:8px;">
+            <code>"exec"</code> → the <code>exec</code> shell builtin<br>
+            <code>"python3" "$0" "$@"</code> → its arguments<br><br>
+            Shell is <span class="hl-amber">replaced</span> by Python running this
+            file. Bash never reaches line 8+.
+          </p>
+        </div>
+        <div class="box">
+          <h3 style="color:#6f6;">Python sees line 6:</h3>
+          <p style="margin-top:8px;">
+            <code>"exec" "python3" "$0" "$@"</code><br>
+            → four adjacent string literals<br>
+            → concatenated: <code>"execpython3$0$@"</code><br>
+            → expression statement, <span class="hl-green">result discarded</span><br><br>
+            No exec happens. Python runs the import + print below.
+          </p>
+        </div>
+        <div class="info-bar" style="font-size:0.82em;">
+          <span class="hl-green">Key:</span> Python's <code>$0</code> and <code>$@</code> are literal
+          strings — no shell expansion. Bash's quoting preserves the builtin name.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

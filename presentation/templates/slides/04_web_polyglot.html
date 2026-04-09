@@ -1,0 +1,50 @@
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <span class="tag">03 — HTML + CSS + JavaScript</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>The Web Is Already Polyglot</h2>
+    <p style="color:#bbb; margin-bottom:8px;">Every <span class="hl-amber">.html</span> file is a polyglot — three parsers, one file, by design.</p>
+    <div class="two-col">
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+  &lt;!-- HTML PARSER reads the structure --&gt;
+
+  &lt;style&gt;
+    /* CSS PARSER handles styles */
+    body {
+      background: #0d0d0d;
+      color: var(--green);
+      font-family: monospace;
+    }
+  &lt;/style&gt;
+
+  &lt;script&gt;
+    // JAVASCRIPT ENGINE runs logic
+    document.addEventListener('DOMContentLoaded', () =&gt; {
+      console.log("three parsers, one file");
+    });
+  &lt;/script&gt;
+
+  &lt;p&gt;Hello, polyglot world!&lt;/p&gt;
+
+&lt;/html&gt;</code></pre>
+      <div style="display:flex; flex-direction:column; gap:14px; justify-content:center;">
+        <div class="box">
+          <h3 style="color:#ff8888;">HTML Parser</h3>
+          <p style="margin-top:8px;">Reads tags, builds the DOM tree. Treats <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code> contents as <em>opaque blobs</em> and hands them off.</p>
+        </div>
+        <div class="box">
+          <h3 style="color:#88aaff;">CSS Parser</h3>
+          <p style="margin-top:8px;">Only processes what's inside <code>&lt;style&gt;</code> tags. The surrounding HTML is completely invisible to it.</p>
+        </div>
+        <div class="box">
+          <h3 style="color:#ffcc44;">JS Engine</h3>
+          <p style="margin-top:8px;">Only runs what's inside <code>&lt;script&gt;</code> tags. Has no awareness of HTML or CSS syntax around it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

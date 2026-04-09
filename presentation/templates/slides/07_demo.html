@@ -1,0 +1,39 @@
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <span class="tag">06 — Live Demo: demo.c</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>Demo: <code style="font-size:0.75em; text-transform:none;">examples/demo.c</code></h2>
+    <div class="two-col" style="align-items:start;">
+      <pre><code class="language-c">{{ demo_c }}</code></pre>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="box">
+          <h3>Run as Python</h3>
+          <div style="margin-top:10px;">
+            <div class="prompt-line"><span class="prompt">$ </span><span class="cmd">python demo.c</span></div>
+            <div style="color:#aaa; font-size:0.88em; margin-top:6px; padding-left:14px;">
+              Hello from Python!<br>
+              Interpreted line by line.
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Compile + run as C</h3>
+          <div style="margin-top:10px;">
+            <div class="prompt-line" style="font-size:0.82em;"><span class="prompt">$ </span><span class="cmd">gcc demo.c -o demo &amp;&amp; ./demo</span></div>
+            <div style="color:#aaa; font-size:0.88em; margin-top:6px; padding-left:14px;">
+              Hello from C!<br>
+              Compiled to native machine code.
+            </div>
+          </div>
+        </div>
+        <div class="info-bar" style="font-size:0.82em;">
+          <span class="hl-amber">Same bytes on disk.</span>
+          Two completely different execution paths.
+          Zero modification between runs.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
