@@ -5,8 +5,8 @@
   </div>
   <div class="slide-body">
     <h2>How the Two Lines Work</h2>
-    <pre style="flex:none; margin-bottom:6px;"><code class="language-python">1 // (lambda: exec("print('Hello Python!')", globals()) or 1)()
-lambda: eval("console.log('Hello JS!')")</code></pre>
+    <pre style="flex:none; margin-bottom:6px;"><code class="language-python">1 // (lambda: exec("nums=[1,2,3,4,5]\nprint('Python:',list(map(lambda x:x**2,nums)))", globals()) or 1)()
+lambda: eval("const nums=[1,2,3,4,5]; console.log('JS:    ', nums.map(x => x**2));")</code></pre>
     <div class="parser-view">
       <div class="pv-c" style="background:#0a0510;">
         <div class="pv-header" style="background:#1a0830; color:#aaaaff;">PYTHON READS IT</div>
@@ -34,7 +34,7 @@ lambda: eval("console.log('Hello JS!')")</code></pre>
           <div class="line active" style="margin-top:6px;">lambda:</div>
           <div class="exec" style="padding:1px 0; white-space:pre; font-family:monospace; color:var(--amber);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑ LABELED STATEMENT (rare JS syntax)</div>
           <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  "lambda" is just a label name</div>
-          <div class="line active">  eval("console.log('Hello JS!')")</div>
+          <div class="line active">  eval("const nums=[1,2,3,4,5]; console.log(...)")</div>
           <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;↑ this runs! JS code executes</div>
         </div>
       </div>

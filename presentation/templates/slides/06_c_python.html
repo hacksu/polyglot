@@ -18,11 +18,15 @@
           <div class="line exec">#endif &nbsp;&nbsp;← resume normal compilation</div>
           <div class="line active">#include &lt;stdio.h&gt;</div>
           <div class="line active">int main(void) {</div>
-          <div class="line active">&nbsp;&nbsp;printf("Hello from C!\n");</div>
+          <div class="line active">&nbsp;&nbsp;printf("[ C ]  Fibonacci: ");</div>
+          <div class="line active">&nbsp;&nbsp;int a = 0, b = 1;</div>
+          <div class="line active">&nbsp;&nbsp;for (int i = 0; i &lt; 8; i++) { ... }</div>
           <div class="line active">}</div>
           <div class="line exec">#if 0  &nbsp;&nbsp;&nbsp;← skip again</div>
           <div class="line skip">"""</div>
-          <div class="line skip">print("Hello from Python!")</div>
+          <div class="line skip">print("[ Python ]  Fibonacci: ", end="")</div>
+          <div class="line skip">a, b = 0, 1</div>
+          <div class="line skip">for _ in range(8): ...</div>
           <div class="line exec">#endif</div>
         </div>
       </div>
@@ -34,11 +38,13 @@
           <div class="line skip">&nbsp;&nbsp;#endif</div>
           <div class="line skip">&nbsp;&nbsp;#include &lt;stdio.h&gt;</div>
           <div class="line skip">&nbsp;&nbsp;int main(void) {</div>
-          <div class="line skip">&nbsp;&nbsp;&nbsp;&nbsp;printf("Hello from C!\n");</div>
-          <div class="line skip">&nbsp;&nbsp;}</div>
+          <div class="line skip">&nbsp;&nbsp;printf("[ C ]  Fibonacci: ");</div>
+          <div class="line skip">&nbsp;&nbsp;int a = 0, b = 1; ...</div>
           <div class="line skip">&nbsp;&nbsp;#if 0</div>
           <div class="line str">"""  &nbsp;&nbsp;&nbsp;&nbsp;← string ends, x assigned</div>
-          <div class="line active">print("Hello from Python!")</div>
+          <div class="line active">print("[ Python ]  Fibonacci: ", end="")</div>
+          <div class="line active">a, b = 0, 1</div>
+          <div class="line active">for _ in range(8): ...</div>
           <div class="line comment">#endif &nbsp;&nbsp;← Python comment, ignored</div>
         </div>
       </div>

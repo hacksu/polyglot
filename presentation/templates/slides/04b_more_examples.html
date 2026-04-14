@@ -28,8 +28,10 @@ print("Hello from Python!")
           <pre style="margin-top:8px; font-size:0.75em;"><code class="language-bash">#!/bin/sh
 "exec" "python3" "$0" "$@"
 
-import sys
-print(f"Hello from Python {sys.version_info.major}!")</code></pre>
+import os, sys, platform
+print(f"[python {sys.version_info.major}.{sys.version_info.minor}]")
+print(f"  OS:    {platform.system()}")
+print(f"  Shell: {os.environ.get('SHELL', 'unknown')}")</code></pre>
           <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
             From <code>examples/bash_python.sh</code> - <code>"exec"</code>
             is a quoted word in bash but adjacent string literals in Python.
@@ -39,8 +41,8 @@ print(f"Hello from Python {sys.version_info.major}!")</code></pre>
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div class="box">
           <h3>Python + JavaScript</h3>
-          <pre style="margin-top:8px; font-size:0.75em;"><code class="language-python">1 // (lambda: exec("print('Python!')", globals()) or 1)()
-lambda: eval("console.log('JavaScript!')")</code></pre>
+          <pre style="margin-top:8px; font-size:0.75em;"><code class="language-python">1 // (lambda: exec("nums=[1,2,3,4,5]\nprint('Python:',list(map(lambda x:x**2,nums)))", globals()) or 1)()
+lambda: eval("const nums=[1,2,3,4,5]; console.log('JS:', nums.map(x=>x**2));")</code></pre>
           <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
             The polycompiler output format. Exploits <code>//</code>
             as floor division (Python) vs line comment (JS), and
@@ -55,11 +57,13 @@ x = """
 #endif
 #include &lt;stdio.h&gt;
 int main(void) {
-    printf("Hello C!\n");
+    printf("[ C ]  Fibonacci: ");
+    /* ... loop ... */
 }
 #if 0
 """
-print("Hello Python!")
+print("[ Python ]  Fibonacci: ", end="")
+# ... loop ...
 #endif</code></pre>
           <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
             From <code>examples/demo.c</code> - the main demo.
