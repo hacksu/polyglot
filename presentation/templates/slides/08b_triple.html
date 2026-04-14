@@ -1,0 +1,75 @@
+<div class="slide" id="slide-8b">
+  <div class="slide-header">
+    <span class="tag">07b - Three Languages, One File</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>Bash + Python + C</h2>
+    <p style="color:#bbb; margin-bottom:10px;">
+      Combine both tricks: the <span class="hl-amber">exec</span> trick for Bash
+      and the <span class="hl-amber">#if 0</span> trick for C.
+      Same file - three runtimes, all valid.
+    </p>
+    <div class="two-col">
+      <pre><code class="language-c">#if 0
+"exec" "python3" "$0" "$@"
+x = """
+#endif
+
+#include &lt;stdio.h&gt;
+int main(void) {
+    printf("[ C ]  Fibonacci: ");
+    int a = 0, b = 1;
+    for (int i = 0; i &lt; 8; i++) {
+        printf("%d ", a);
+        int t = a+b; a = b; b = t;
+    }
+    printf("\n");
+    return 0;
+}
+
+#if 0
+"""
+print("[ Python ]  Fibonacci: ", end="")
+a, b = 0, 1
+for _ in range(8):
+    print(a, end=" ")
+    a, b = b, a + b
+print()
+#endif</code></pre>
+
+      <div style="display:flex; flex-direction:column; gap:10px; justify-content:center;">
+        <div class="box">
+          <h3 style="color:#f96;">Bash sees it</h3>
+          <ul style="margin-top:8px; font-size:0.88em;">
+            <li><code>#if 0</code> - comment, ignored</li>
+            <li><code>"exec" "python3" ...</code> - runs exec, <span class="hl-amber">bash replaced by Python</span></li>
+            <li>Never reaches anything below</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3 style="color:#6f6;">Python sees it</h3>
+          <ul style="margin-top:8px; font-size:0.88em;">
+            <li><code>#if 0</code> - comment, ignored</li>
+            <li><code>"exec" "python3" ...</code> - string expression, <span class="hl-green">discarded</span></li>
+            <li><code>x = """..."""</code> - C code hidden in a string</li>
+            <li>Fibonacci loop <span class="hl-green">executes</span></li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3 style="color:#88aaff;">C sees it</h3>
+          <ul style="margin-top:8px; font-size:0.88em;">
+            <li><code>#if 0</code> - preprocessor skips exec + x = """</li>
+            <li><code>#include</code>, <code>main()</code> - <span class="hl-amber">compiled normally</span></li>
+            <li>Second <code>#if 0</code> skips the Python code</li>
+          </ul>
+        </div>
+        <div class="info-bar" style="font-size:0.82em;">
+          <code>bash triple.c</code> &nbsp;·&nbsp;
+          <code>python3 triple.c</code> &nbsp;·&nbsp;
+          <code>gcc triple.c -o t &amp;&amp; ./t</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
