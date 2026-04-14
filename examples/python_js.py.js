@@ -1,2 +1,2 @@
-1 // (lambda: exec("import sys\nprint('Hello from Python ' + str(sys.version_info.major) + '!' )\nprint('Here, // is the floor-division operator — the lambda runs.')", globals()) or 1)()
-lambda: eval("console.log('Hello from JavaScript!'); console.log('Here, // was a line comment — the lambda above was skipped. This label ran instead.');")
+1 // (lambda: exec("nums=[1,2,3,4,5]\nprint('Python:', list(map(lambda x: x**2, nums)))", globals()) or 1)()
+lambda: eval("const nums=[1,2,3,4,5]; console.log('JS:    ', nums.map(x => x**2));")

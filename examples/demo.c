@@ -1,33 +1,29 @@
 #if 0
-# ── POLYGLOT FILE ─────────────────────────────────────────────
-# Valid C source AND valid Python script — same bytes, two runtimes
-#
-# Run as Python:   python demo.c
-# Compile as C:    gcc demo.c -o demo && ./demo
-#
-# How it works:
-#   C preprocessor:  #if 0 ... #endif blocks are stripped before compilation.
-#   Python parser:   #if 0 is just a comment; x = """...""" hides the C code
-#                    inside a Python string, so Python never executes it.
-# ──────────────────────────────────────────────────────────────
+# Run as Python:  python demo.c
+# Compile as C:   gcc demo.c -o demo && ./demo
 x = """
 #endif
 
 #include <stdio.h>
 
 int main(void) {
-    printf("Hello from C!\n");
-    printf("Compiled to native machine code.\n");
+    printf("[ C ]  Fibonacci: ");
+    int a = 0, b = 1;
+    for (int i = 0; i < 8; i++) {
+        printf("%d ", a);
+        int t = a + b; a = b; b = t;
+    }
+    printf("\n");
     return 0;
 }
 
 #if 0
 """
-# ── Python only sees below this line ──────────────────────────
-# Everything above (the C code) was quietly assigned to the
-# string variable x.  Python never tried to execute any of it.
-
-print("Hello from Python!")
-print("Interpreted line by line.")
+print("[ Python ]  Fibonacci: ", end="")
+a, b = 0, 1
+for _ in range(8):
+    print(a, end=" ")
+    a, b = b, a + b
+print()
 
 #endif
