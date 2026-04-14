@@ -220,6 +220,26 @@
     <li>The output file must be <code>.py.js</code> - Node.js refuses to execute files with other extensions in certain module modes.</li>
     <li>Point students to the GitHub repo - the README is very readable and explains the "aha moment" the author had.</li>
   </ul>
+  <div class="demo">
+    <strong>Step-by-step demo - run this live:</strong><br><br>
+    <strong>1. Install polycompiler (needs Node.js)</strong><br>
+    <code>npm install -g polycompiler</code><br><br>
+    <strong>2. Write a Python file</strong><br>
+    <code>echo 'print("Hello from Python!")' &gt; hello.py</code><br><br>
+    <strong>3. Write a JavaScript file</strong><br>
+    <code>echo 'console.log("Hello from JavaScript!")' &gt; hello.js</code><br><br>
+    <strong>4. Merge into one polyglot file</strong><br>
+    <code>polycompiler hello.py hello.js out.py.js</code><br><br>
+    <strong>5. Run with both runtimes</strong><br>
+    <code>python3 out.py.js</code>&nbsp;&nbsp;# prints: Hello from Python!<br>
+    <code>node out.py.js</code>&nbsp;&nbsp;&nbsp;&nbsp;# prints: Hello from JavaScript!<br><br>
+    <strong>6. Inspect the output - this is what polycompiler generated:</strong><br>
+    <code>cat out.py.js</code><br><br>
+    You should see two lines:<br>
+    <code>1 // (lambda: exec("print('Hello from Python!')", globals()) or 1)()</code><br>
+    <code>lambda: eval("console.log('Hello from JavaScript!')")</code><br><br>
+    <strong>That's the whole file. Point this out - it's only 2 lines.</strong>
+  </div>
 </div>
 
 <div class="slide-note">
@@ -233,9 +253,11 @@
     <li>Ask: <em>"If you were designing a polyglot tool for Python and Ruby, what operator duality would you look for?"</em></li>
   </ul>
   <div class="demo">
-    <strong>Commands:</strong><br>
+    <strong>Run the existing example file:</strong><br>
     <code>python3 examples/python_js.py.js</code><br>
-    <code>node examples/python_js.py.js</code>
+    <code>node examples/python_js.py.js</code><br><br>
+    <strong>Verify the file hasn't changed between runs:</strong><br>
+    <code>cat examples/python_js.py.js</code>
   </div>
 </div>
 
