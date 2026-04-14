@@ -1,0 +1,73 @@
+<div class="slide" id="slide-13">
+  <div class="slide-header">
+    <span class="tag">12 - Build It Live</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>Build Your Own Polyglot</h2>
+    <div class="two-col">
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <p style="color:#bbb; flex-shrink:0;">Fill in the blanks - the structure is already there:</p>
+        <pre><code class="language-c">#if 0
+x = """
+#endif
+
+/* ── YOUR C CODE HERE ──────────────────────────── */
+
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    /* TODO: printf("Hello from C!\n"); */
+
+
+    return 0;
+}
+
+/* ─────────────────────────────────────────────── */
+
+#if 0
+"""
+# ── YOUR PYTHON CODE HERE ──────────────────────
+
+# TODO: print("Hello from Python!")
+
+
+#endif</code></pre>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:12px; justify-content:flex-start;">
+        <div class="box">
+          <h3>Goal</h3>
+          <ul style="margin-top:8px;">
+            <li>Save as <code>my_polyglot.c</code></li>
+            <li>When run with Python, print <span class="hl-green">Hello from Python!</span></li>
+            <li>When compiled with GCC, print <span class="hl-amber">Hello from C!</span></li>
+          </ul>
+        </div>
+
+        <div class="box">
+          <h3>Test it</h3>
+          <pre style="margin-top:8px;"><code class="language-bash">python my_polyglot.c
+
+gcc my_polyglot.c -o mine && ./mine</code></pre>
+        </div>
+
+        <div class="box">
+          <h3>Hints</h3>
+          <ul style="margin-top:8px;">
+            <li>Python ignores <code>#if 0</code> - it's just a <span class="hl-green"># comment</span></li>
+            <li>C ignores everything between <code>#if 0</code> and <code>#endif</code></li>
+            <li><code>x = """..."""</code> hides C code as a Python <span class="hl-green">string</span></li>
+            <li>Don't change the skeleton - only fill the TODO lines</li>
+          </ul>
+        </div>
+
+        <div class="info-bar">
+          <span class="hl-amber">Stretch:</span> Add a second function that prints your name in both languages.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

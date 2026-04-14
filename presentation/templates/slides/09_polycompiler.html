@@ -1,57 +1,56 @@
 <div class="slide" id="slide-9">
   <div class="slide-header">
-    <span class="tag">08 — polycompiler</span>
+    <span class="tag">08 - polycompiler</span>
     <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
   </div>
   <div class="slide-body">
-    <h2>polycompiler — Python + JavaScript</h2>
+    <h2>polycompiler - Python + JavaScript</h2>
     <p style="color:#bbb; margin-bottom:10px;">
-      A library by <span class="hl-amber">evanzhoudev</span> that merges separate Python and JS files
-      into one file runnable by <em>both</em> CPython and Node.js.
+      An experimental npm package (304 ★) by <span class="hl-amber">evanzhoudev</span> that merges
+      Python and JS into one file runnable by both runtimes.
       <span class="hl-dim">&nbsp;github.com/evanzhoudev/polycompiler</span>
     </p>
     <div class="two-col">
-      <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
         <div class="box">
           <h3>Install + use</h3>
           <pre style="margin-top:10px;"><code class="language-bash">npm install -g polycompiler
 
-# Merge Python + JS into one file
-polycompiler script.py script.js -o both.py
+# Merge your files
+polycompiler script.py script.js out.py.js
 
-# Same file, two runtimes:
-python both.py
-node   both.py</code></pre>
+# Run with either runtime
+python3 out.py.js
+node    out.py.js</code></pre>
         </div>
         <div class="box">
-          <h3>Why Python+JS is harder</h3>
-          <p style="margin-top:8px;">
-            Python and JavaScript share similar surface syntax — you can't just hide
-            one inside the other's comment blocks. polycompiler uses
-            <span class="hl-amber">semantic divergence</span>: expressions that evaluate
-            <em>differently</em> in each runtime to branch execution.
-          </p>
+          <h3>Output format</h3>
+          <pre style="margin-top:8px;"><code class="language-python">1 // (lambda: exec("PYTHON CODE", globals()) or 1)()
+lambda: eval("JS CODE")</code></pre>
+          <p style="margin-top:8px;">Two lines. That's the whole trick.</p>
         </div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:14px;">
-        <div class="ascii" style="font-size:0.75em;">  script.py       script.js
-      │                 │
-      └──── polycompiler ──┘
-                 │
-             both.py
-           ┌────┴────┐
-           │         │
-        python3     node
-        runs it    runs it
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="box">
+          <h3 style="color:#ffcc44;">The <code>//</code> operator duality</h3>
+          <ul style="margin-top:8px;">
+            <li>Python: <code>//</code> is <span class="hl-green">floor division</span> - line 1 <em>evaluates</em></li>
+            <li>JavaScript: <code>//</code> is a <span class="hl-amber">line comment</span> - line 1 is skipped</li>
+          </ul>
         </div>
         <div class="box">
-          <h3>How it branches</h3>
+          <h3 style="color:#88aaff;">The <code>lambda:</code> label duality</h3>
           <ul style="margin-top:8px;">
-            <li style="font-size:0.82em;">Detects runtime via expressions that differ</li>
-            <li style="font-size:0.82em;"><code>(1).__class__.__name__</code> → <code>'int'</code> in Python, error in JS</li>
-            <li style="font-size:0.82em;"><code>typeof undefined</code> → valid in JS, <code>NameError</code> in Python</li>
-            <li style="font-size:0.82em;">Uses these divergences to route to the right code path</li>
+            <li>Python: <code>lambda:</code> creates an uncalled lambda - <span class="hl-green">discarded</span></li>
+            <li>JavaScript: <code>lambda:</code> is a <span class="hl-amber">labeled statement</span> - <code>eval()</code> runs</li>
           </ul>
+        </div>
+        <div class="box">
+          <h3>Limitation</h3>
+          <p style="margin-top:8px;">
+            Node.js only executes files with <span class="hl-amber">.py.js</span> extension -
+            it refuses other extensions. The output file must be named <code>*.py.js</code>.
+          </p>
         </div>
       </div>
     </div>

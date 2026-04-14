@@ -1,0 +1,71 @@
+<div class="slide" id="slide-4b">
+  <div class="slide-header">
+    <span class="tag">03b - More Examples</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>More Polyglot Examples</h2>
+    <div class="two-col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="box">
+          <h3>HTML + Python</h3>
+          <pre style="margin-top:8px; font-size:0.75em;"><code class="language-python">"""&lt;!--
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;h1&gt;Hello from the browser!&lt;/h1&gt;
+&lt;/html&gt;
+&lt;!--"""
+
+print("Hello from Python!")
+# --&gt;</code></pre>
+          <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
+            Python: triple-quoted string hides HTML.<br>
+            Browser: <code>&lt;!-- --&gt;</code> hides Python code.
+          </p>
+        </div>
+        <div class="box">
+          <h3>Shell + Python (shebang trick)</h3>
+          <pre style="margin-top:8px; font-size:0.75em;"><code class="language-bash">#!/bin/sh
+"exec" "python3" "$0" "$@"
+
+import sys
+print(f"Hello from Python {sys.version_info.major}!")</code></pre>
+          <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
+            From <code>examples/bash_python.sh</code> - <code>"exec"</code>
+            is a quoted word in bash but adjacent string literals in Python.
+          </p>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="box">
+          <h3>Python + JavaScript</h3>
+          <pre style="margin-top:8px; font-size:0.75em;"><code class="language-python">1 // (lambda: exec("print('Python!')", globals()) or 1)()
+lambda: eval("console.log('JavaScript!')")</code></pre>
+          <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
+            The polycompiler output format. Exploits <code>//</code>
+            as floor division (Python) vs line comment (JS), and
+            <code>lambda:</code> as expression prefix (Python) vs
+            labeled statement (JS).
+          </p>
+        </div>
+        <div class="box">
+          <h3>C + Python</h3>
+          <pre style="margin-top:8px; font-size:0.75em;"><code class="language-c">#if 0
+x = """
+#endif
+#include &lt;stdio.h&gt;
+int main(void) {
+    printf("Hello C!\n");
+}
+#if 0
+"""
+print("Hello Python!")
+#endif</code></pre>
+          <p style="margin-top:8px; font-size:0.82em; color:#bbb;">
+            From <code>examples/demo.c</code> - the main demo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

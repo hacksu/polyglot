@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+"""<!--
+# Run as Python: python3 html_python.html
+# Run as browser: open html_python.html
+-->
+<!DOCTYPE html>
+<html>
+<head><title>HTML + Python Polyglot</title></head>
+<body style="background:#142027;color:#35c982;font-family:monospace;padding:40px;">
+  <h1>Hello from the Browser!</h1>
+  <p>This file is valid HTML <em>and</em> valid Python.</p>
+  <pre id="how"></pre>
+  <script>
+    document.getElementById('how').textContent =
+      'How it works:\n' +
+      '  Python: everything above print() is a triple-quoted string.\n' +
+      '  HTML:   the Python code sits inside an HTML comment <!-- ... -->.';
+  </script>
+</body>
+</html>
+<!--"""
+
+# ── Python only sees below this line ─────────────────────────
+# Everything above was assigned to an unnamed string expression.
+# The HTML parser never sees this Python code — it is outside
+# the </html> tag, which browsers silently ignore.
+
+print("Hello from Python!")
+print()
+print("How it works:")
+print("  Python: everything above is a triple-quoted string expression.")
+print("  HTML:   the Python code is after </html>, which browsers ignore.")
+print("  Both files are 100% valid in their own parser.")
+
+# -->

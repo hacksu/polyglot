@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speaker Notes - Polyglot Programming</title>
+  <style>
+    :root {
+      --green: #35C982;
+      --blue:  #4683FF;
+      --bg:    #142027;
+      --card:  #0d1a22;
+      --border:#1a2a3f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: #e8e8e8;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 40px 60px 80px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 16px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    header h1 { font-size: 1.4em; color: var(--green); letter-spacing: 3px; }
+    header p  { font-size: 0.8em; color: #666; }
+    .slide-note {
+      border: 1px solid var(--border);
+      background: var(--card);
+      margin-bottom: 28px;
+      padding: 20px 24px;
+    }
+    .slide-note .num {
+      font-size: 0.7em;
+      color: var(--blue);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .slide-note h2 {
+      font-size: 1.05em;
+      color: var(--green);
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .slide-note ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .slide-note ul li::before { content: '▸ '; color: var(--blue); }
+    .slide-note ul li { font-size: 0.9em; line-height: 1.6; color: #ddd; }
+    .slide-note ul li code {
+      background: #0a1520;
+      padding: 1px 5px;
+      border: 1px solid var(--border);
+      color: var(--green);
+      font-size: 0.92em;
+    }
+    .slide-note .demo {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-left: 3px solid var(--blue);
+      background: #091420;
+      font-size: 0.85em;
+      color: #a0d4bc;
+    }
+    .slide-note .demo strong { color: var(--blue); }
+    @media print {
+      body { background: white; color: black; padding: 20px; max-width: none; }
+      .slide-note { border: 1px solid #ccc; background: #f9f9f9; break-inside: avoid; }
+      .slide-note h2 { color: #222; }
+      .slide-note ul li { color: #333; }
+      .slide-note .demo { border-left-color: #4683FF; background: #f0f4ff; color: #333; }
+      header { border-color: #333; }
+      header h1 { color: #222; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>SPEAKER NOTES</h1>
+    <p style="margin-top:4px;">Polyglot Programming - HacKSU Lesson</p>
+  </div>
+  <p>print as reference &nbsp;·&nbsp; Ctrl+P</p>
+</header>
+
+<div class="slide-note">
+  <div class="num">Slide 1</div>
+  <h2>Title - Polyglot Programming</h2>
+  <ul>
+    <li>Welcome everyone. Ask the room: <em>"How many of you have ever written code that compiles in two different languages at the same time?"</em> - usually zero hands.</li>
+    <li>Today we'll build to a place where that answer is yes, and where you can explain exactly why it works.</li>
+    <li>Point at the two terminal commands on screen - <code>python demo.c</code> and <code>gcc demo.c -o demo && ./demo</code> - tell them both actually run right now from the same unmodified file.</li>
+    <li>The goal isn't magic tricks. It's understanding parsers deeply enough to exploit them deliberately.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 2</div>
+  <h2>What is a Polyglot File?</h2>
+  <ul>
+    <li>Stress: this is <strong>not</strong> a hack or a bug. It follows the formal grammar rules of both languages exactly.</li>
+    <li>Key mental model: every parser has regions it ignores. A polyglot is just code that hides language B inside language A's ignored regions.</li>
+    <li>The bytes on disk never change - only the parser changes.</li>
+    <li>Walk through the "what we'll cover" list so students know where the lesson is going.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 3</div>
+  <h2>How Do Parsers Work?</h2>
+  <ul>
+    <li>Ask the room: <em>"What characters start a comment in Python? In C? In HTML?"</em> Get them thinking about how different every language is.</li>
+    <li>Point out the three categories: syntax-level comments, skip directives (like <code>#if 0</code>), and file-format-level rules (JPEG/ZIP).</li>
+    <li>The golden rule at the bottom is worth reading aloud and pausing on: <em>"If parser A ignores region R, and R is valid in B, you can hide B inside R."</em></li>
+    <li>This one rule explains every example that follows.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 4</div>
+  <h2>The Web Is Already Polyglot</h2>
+  <ul>
+    <li>This is the "aha" slide for web students - they've written polyglot code every day without knowing it.</li>
+    <li>Walk through the code left-to-right: HTML parser hands off <code>&lt;style&gt;</code> to the CSS parser and <code>&lt;script&gt;</code> to the JS engine. Three parsers, one file, by design.</li>
+    <li>The CSS parser literally cannot parse HTML syntax. It only sees what's inside <code>&lt;style&gt;</code> tags. Everything outside is invisible to it.</li>
+    <li>Point out: browser makers chose this design intentionally - they needed three languages in one file for the web to work.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 5</div>
+  <h2>More Examples</h2>
+  <ul>
+    <li>Quick tour of all four patterns side-by-side so students can see the variety.</li>
+    <li>HTML+Python uses a double trick: <code>"""..."""</code> hides HTML from Python, and <code>&lt;!-- --&gt;</code> comments hide Python from the browser.</li>
+    <li>Shell+Python is the <code>examples/bash_python.sh</code> they can run right now.</li>
+    <li>Python+JS is what polycompiler outputs - coming up in slides 10 and 11.</li>
+    <li>C+Python is the main demo - coming up in slides 7 and 8.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 6</div>
+  <h2>Binary Polyglots - Images</h2>
+  <ul>
+    <li>This is the most surprising one for most students - no source code involved at all.</li>
+    <li>Key insight: JPEG reads from the <strong>start</strong>, ZIP reads from the <strong>end</strong>. They never step on each other.</li>
+    <li>The simple concatenation <code>cat image.jpg archive.zip > both.jpg</code> literally works - try it live if you want.</li>
+    <li>GIFAR was a real browser vulnerability (2008) - a GIF+JAR file could run Java code while appearing to be an image, bypassing same-origin policy. It was patched but the concept lives on in CTF challenges.</li>
+    <li>Malware uses this today to evade antivirus scanners that check file magic bytes.</li>
+  </ul>
+  <div class="demo"><strong>Live demo option:</strong> grab any JPEG, zip a text file, concatenate them, verify both <code>open image</code> and <code>unzip</code> work on the result.</div>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 7</div>
+  <h2>The C + Python Mechanism</h2>
+  <ul>
+    <li>Walk both columns simultaneously, line by line. Point to the left then right for each line.</li>
+    <li>C side: <code>#if 0</code> is a preprocessor directive. The preprocessor runs <em>before</em> the compiler even sees the code. It strips out the entire block. The compiler never knows the Python code existed.</li>
+    <li>Python side: <code>#if 0</code> is just a hash comment - the <code>#</code> character makes the rest of the line invisible to Python. Then <code>x = """</code> opens a triple-quoted string and everything until the closing <code>"""</code> is just string data assigned to x.</li>
+    <li>Neither language produces an error. Both produce correct output. Same bytes.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 8</div>
+  <h2>Live Demo - demo.c</h2>
+  <ul>
+    <li><strong>Run both commands live.</strong> Open a terminal and do it in front of the class - this is the most impactful moment of the lesson.</li>
+    <li>Before running, ask: <em>"What do you expect to happen when we pass a .c file to Python?"</em> Most will say "error". Let them be surprised.</li>
+    <li>Emphasize: Python doesn't care about the <code>.c</code> extension. It reads file content, not filenames. Same with GCC.</li>
+    <li>After the demo, ask: <em>"Where would you even start if you wanted to write one of these yourself?"</em> - set up the exercises slide.</li>
+  </ul>
+  <div class="demo">
+    <strong>Commands:</strong><br>
+    <code>python examples/demo.c</code><br>
+    <code>gcc examples/demo.c -o demo &amp;&amp; ./demo</code>
+  </div>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 9</div>
+  <h2>Bash + Python</h2>
+  <ul>
+    <li>The subtlety here is quoting in bash. In shell, double-quoting a word doesn't prevent it from being executed as a command - it just prevents globbing and word splitting. So <code>"exec"</code> is still the <code>exec</code> builtin.</li>
+    <li>In Python, two adjacent string literals like <code>"exec" "python3"</code> are silently concatenated at compile time into one string - this is a little-known Python feature.</li>
+    <li>The <code>$0</code> and <code>$@</code> are NOT expanded by Python - they're literal dollar signs. Only bash expands shell variables.</li>
+    <li>When bash hits that line, <code>exec</code> replaces the entire shell process with Python - bash is gone and Python takes over running the same file from the top.</li>
+  </ul>
+  <div class="demo">
+    <strong>Commands:</strong><br>
+    <code>bash examples/bash_python.sh</code><br>
+    <code>python3 examples/bash_python.sh</code>
+  </div>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 10</div>
+  <h2>polycompiler - Overview</h2>
+  <ul>
+    <li>Real npm package - 304 GitHub stars as of this lesson. Made by a solo developer (evanzhoudev) as an experimental project.</li>
+    <li>Python and JS are much harder to polyglot than C+Python because they share so much syntax - you can't just hide one in the other's comment.</li>
+    <li>The trick needed a completely different approach: find an <em>operator</em> that means different things in both languages.</li>
+    <li>The output file must be <code>.py.js</code> - Node.js refuses to execute files with other extensions in certain module modes.</li>
+    <li>Point students to the GitHub repo - the README is very readable and explains the "aha moment" the author had.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 11</div>
+  <h2>polycompiler - The Live Trace</h2>
+  <ul>
+    <li>This is the most technically dense slide. Slow down here.</li>
+    <li><code>//</code> is the pivot point. In Python it's an operator - both sides are evaluated. In JS it's a comment - everything after it on that line disappears.</li>
+    <li>JavaScript labeled statements (<code>label: statement</code>) are a rarely-used feature - most JS developers have never written one. <code>lambda:</code> is a perfectly valid label in JS because <code>lambda</code> is not a reserved word there.</li>
+    <li>In Python, <code>lambda:</code> starts a zero-argument lambda expression. Since it's never followed by a call <code>()</code>, the lambda object is created and immediately discarded.</li>
+    <li>Ask: <em>"If you were designing a polyglot tool for Python and Ruby, what operator duality would you look for?"</em></li>
+  </ul>
+  <div class="demo">
+    <strong>Commands:</strong><br>
+    <code>python3 examples/python_js.py.js</code><br>
+    <code>node examples/python_js.py.js</code>
+  </div>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 12</div>
+  <h2>Why Does This Matter?</h2>
+  <ul>
+    <li>CTF: If students ever compete in capture-the-flag competitions, polyglot file forensics is a near-guarantee. Knowing to check for hidden ZIP/RAR/7z appended to images is a fundamental skill.</li>
+    <li>Security: PHAR (PHP Archive) polyglot attacks were used in real-world breaches as recently as 2022 against PHP apps with file upload features.</li>
+    <li>Parser literacy: Being able to read a language spec and identify "ignored regions" is the same skill used to find security bugs in parsers - this is how XSS and injection bugs get found.</li>
+    <li>Keep this slide quick - it's a survey. The exercises slide is where they engage.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 13</div>
+  <h2>Try It Yourself</h2>
+  <ul>
+    <li>Give them actual time to work - even 5-10 minutes here is valuable.</li>
+    <li>Exercise 1 is deliberately trivial - just running the demos. Gets everyone in the room to see it work with their own eyes.</li>
+    <li>Exercise 2 (extend demo.c) is the best learning exercise. Students have to understand both languages' ignored regions before they can add to the polyglot.</li>
+    <li>Exercise 3 (binary polyglot) is the most satisfying - it feels like a magic trick when the image still opens after unzipping.</li>
+    <li>The bonus (Python+HTML) is: use <code>"""...&lt;!-- """</code> to hide the HTML header and <code>&lt;!-- ... --&gt;</code> to hide the Python footer. See <code>examples/html_python.html</code>.</li>
+  </ul>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 14 - Build It Live</div>
+  <h2>Complete Solution (keep off screen!)</h2>
+  <ul>
+    <li>Give students ~5 minutes to attempt it before revealing anything.</li>
+    <li>Common mistakes: forgetting the <code>return 0;</code>, putting Python code inside the C block, or not closing the triple-quoted string before <code>print()</code>.</li>
+    <li>If someone finishes early, give them the stretch goal: add a <code>greet()</code> function in C and a matching <code>def greet()</code> in Python inside their respective sections.</li>
+  </ul>
+  <div class="demo" style="margin-top:14px;">
+    <strong>Full working solution:</strong>
+    <pre style="margin-top:10px; background:#060e14; padding:14px; border:1px solid #1a2a3f; font-size:0.88em; line-height:1.6; overflow-x:auto;">#if 0
+x = """
+#endif
+
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    printf("Hello from C!\n");
+    return 0;
+}
+
+#if 0
+"""
+print("Hello from Python!")
+#endif</pre>
+  </div>
+  <div class="demo" style="margin-top:10px;">
+    <strong>Stretch solution (with name function):</strong>
+    <pre style="margin-top:10px; background:#060e14; padding:14px; border:1px solid #1a2a3f; font-size:0.88em; line-height:1.6; overflow-x:auto;">#if 0
+x = """
+#endif
+
+#include &lt;stdio.h&gt;
+
+void greet(const char *name) {
+    printf("Hello, %s! (from C)\n", name);
+}
+
+int main(void) {
+    printf("Hello from C!\n");
+    greet("HacKSU");
+    return 0;
+}
+
+#if 0
+"""
+def greet(name):
+    print(f"Hello, {name}! (from Python)")
+
+print("Hello from Python!")
+greet("HacKSU")
+#endif</pre>
+  </div>
+</div>
+
+<div class="slide-note">
+  <div class="num">Slide 15</div>
+  <h2>Questions</h2>
+  <ul>
+    <li>Good discussion starters if the room is quiet:</li>
+    <li><em>"Can you think of a language pair where polyglotting would be impossible? Why?"</em></li>
+    <li><em>"If you were a security researcher, how would you detect polyglot files in a file upload?"</em></li>
+    <li><em>"What's the difference between a polyglot file and a quine?"</em></li>
+    <li>Point to HacKSU meetings and Discord for more - this topic connects to CTF training, binary exploitation, and parser security research.</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<div class="slide" id="slide-9b">
+  <div class="slide-header">
+    <span class="tag">08b - polycompiler: live trace</span>
+    <img src="/logo" alt="HacKSU" style="height:22px; vertical-align:middle; opacity:0.92;">
+  </div>
+  <div class="slide-body">
+    <h2>How the Two Lines Work</h2>
+    <pre style="flex:none; margin-bottom:6px;"><code class="language-python">1 // (lambda: exec("print('Hello Python!')", globals()) or 1)()
+lambda: eval("console.log('Hello JS!')")</code></pre>
+    <div class="parser-view">
+      <div class="pv-c" style="background:#0a0510;">
+        <div class="pv-header" style="background:#1a0830; color:#aaaaff;">PYTHON READS IT</div>
+        <div class="pv-body">
+          <div class="line active">1</div>
+          <div class="line exec">  // &nbsp;&nbsp;&nbsp;← floor division operator</div>
+          <div class="line str">  (lambda: exec("...", globals()) or 1)()</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;↑ lambda is called immediately</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  exec() runs the Python code string</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  "or 1" ensures result is truthy</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  1 // result → integer, discarded</div>
+          <div class="line active" style="margin-top:6px;">lambda: eval("...")</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;↑ lambda created but never called</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  eval() never runs → JS code ignored</div>
+        </div>
+      </div>
+      <div class="pv-py" style="background:#05100a;">
+        <div class="pv-header" style="background:#083018; color:#ffcc44;">JAVASCRIPT READS IT</div>
+        <div class="pv-body">
+          <div class="line active">1</div>
+          <div class="line exec">  // &nbsp;&nbsp;&nbsp;← LINE COMMENT starts here</div>
+          <div class="line skip">  (lambda: exec("...", globals()) or 1)()</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;↑ entire rest of line 1 is ignored</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  Python code never seen by JS</div>
+          <div class="line active" style="margin-top:6px;">lambda:</div>
+          <div class="exec" style="padding:1px 0; white-space:pre; font-family:monospace; color:var(--amber);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑ LABELED STATEMENT (rare JS syntax)</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;  "lambda" is just a label name</div>
+          <div class="line active">  eval("console.log('Hello JS!')")</div>
+          <div class="line comment">&nbsp;&nbsp;&nbsp;&nbsp;↑ this runs! JS code executes</div>
+        </div>
+      </div>
+    </div>
+    <div class="info-bar" style="margin-top:6px; font-size:0.82em;">
+      <span class="hl-green">Demo:</span>
+      <code>python3 examples/python_js.py.js</code> &nbsp;·&nbsp;
+      <code>node examples/python_js.py.js</code>
+    </div>
+  </div>
+</div>

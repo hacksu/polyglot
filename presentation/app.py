@@ -22,9 +22,19 @@ def index():
     )
 
 
+@app.route('/notes')
+def notes():
+    return render_template('notes.html')
+
+
 @app.route('/logo')
 def logo():
     return send_from_directory(BASE_DIR, 'HacKSU.png')
+
+
+@app.route('/photo')
+def photo():
+    return send_from_directory(BASE_DIR, 'austin-big.JPG')
 
 
 if __name__ == '__main__':

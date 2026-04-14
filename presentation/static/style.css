@@ -59,13 +59,14 @@ body::after {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 6px;
+  padding-bottom: 8px;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 17px;
   color: var(--dim-green);
   letter-spacing: 1px;
 }
 .slide-header .tag { color: var(--amber); letter-spacing: 3px; text-transform: uppercase; }
+.slide-header img { height: 38px !important; }
 
 /* ── Slide body ─────────────────────────────────────────── */
 .slide-body {
